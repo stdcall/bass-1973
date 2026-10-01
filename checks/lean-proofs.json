@@ -1,0 +1,53 @@
+[
+  {
+    "file": "checks/lean/Bass1973/FullyFaithful.lean",
+    "declarations": [
+      "Bass1973.liftImageIso",
+      "Bass1973.imageIso_iff"
+    ],
+    "book": "Глава I, §1, с.16: полный строгий функтор не переводит неизоморфные объекты в изоморфные.",
+    "limitations": "Построение изоморфизма между объектами по изоморфизму их образов. Критерий эквивалентности категорий (1.1) и построение квазиобратного функтора не охвачены.",
+    "passages": [
+      "sec:categories-functors"
+    ]
+  },
+  {
+    "file": "checks/lean/Bass1973/IdempotentLifting.lean",
+    "declarations": [
+      "Bass1973.liftPolynomial₂_defect",
+      "Bass1973.liftPolynomial₂_congruence",
+      "Bass1973.squareZeroDefect_lifts",
+      "Bass1973.corner_left_orthogonal",
+      "Bass1973.corner_right_orthogonal"
+    ],
+    "book": "Глава III, (2.10), с.83–84: биномиальный многочлен при n=2 и ортогональность углового элемента b=(1-e)a(1-e).",
+    "limitations": "Для многочлена проверены факторизация дефекта, сравнение с a и поднятие при квадрате дефекта, равном нулю, в коммутативном кольце. Угловые тождества проверены в произвольном кольце. Произвольная нильпотентность, адическая полнота и индукция по всему семейству не охвачены.",
+    "passages": [
+      "prop:orthogonal-idempotent-lifting"
+    ]
+  },
+  {
+    "file": "checks/lean/Bass1973/SequentialTranslations.lean",
+    "declarations": [
+      "Bass1973.sequential_cofinal_square",
+      "Bass1973.translations_parallel_equalized"
+    ],
+    "book": "Глава I, (8.6), с.55: кофинальность последовательности в категории трансляций.",
+    "limitations": "Два алгебраических равенства: дополнение квадрата кофинальности в аддитивном моноиде и уравнивание параллельных стрелок в коммутативном моноиде без сокращения. Категория индексов, существование по условию(S), контрпример к подкатегории и общая теорема о копределах не формализованы.",
+    "passages": [
+      "prop:sequential-cofinal-translations"
+    ]
+  },
+  {
+    "file": "checks/lean/Bass1973/NilpotentIdempotents.lean",
+    "declarations": [
+      "Bass1973.nilpotent_idempotent_zero",
+      "Bass1973.idempotents_equal_of_nilpotent_corners"
+    ],
+    "book": "Глава III, §3, с.96: единственность идемпотента по радикалу порождённого идеала.",
+    "limitations": "Нильпотентный идемпотент равен нулю; два идемпотента в коммутативном кольце равны, если оба дополнительных угловых элемента нильпотентны. Равенство радикалов идеалов и построение идемпотента не формализованы.",
+    "passages": [
+      "prop:idempotents-clopen-spectrum"
+    ]
+  }
+]

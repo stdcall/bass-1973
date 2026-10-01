@@ -1,0 +1,146 @@
+{
+  "max_line_length": 80,
+  "language": "ru",
+  "chapter_files": "content/\\d{2,3}-[a-z0-9-]+\\.typ",
+  "cited_helpers": [
+    "bib-item"
+  ],
+  "literal_references": {
+    "content/14-abelian-categories.typ": {
+      "Бурбаки~@bib:Bourbaki1971a, §~1": "Параграф другой книги: Bourbaki, Algèbre commutative, chapitre I."
+    },
+    "content/31-semisimplicity-wedderburn.typ": {
+      "Бурбаки~@bib:Bourbaki1966b, § 10, п. 4": "Локатор в Bourbaki, Algèbre, chapitre VIII.",
+      "Басс~@bib:Bass1967, гл. III, следствие 2.7": "Локатор в Bass, Lectures on topics in algebraic K-theory, Tata, 1967."
+    },
+    "content/36-homological-dimension.typ": {
+      "Маклейна @bib:MacLane1963, гл. VII, следствие (1.5)": "Локатор в MacLane, Homology, 1963."
+    },
+    "content/37-rank-picard-krull.typ": {
+      "@bib:Bourbaki1971b, § 5, № 7, замечание 2": "Локатор в Bourbaki, Algèbre commutative, chapitre II.",
+      "Бурбаки @bib:Bourbaki1971e, § 1, п. 9–10": "Локатор в Bourbaki, Algèbre commutative, chapitre VII.",
+      "Бурбаки @bib:Bourbaki1971c, § 3, п. 2": "Локатор в Bourbaki, Algèbre commutative, chapitre III.",
+      "Бурбаки @bib:Bourbaki1971e, § 1, п. 8": "Локатор в Bourbaki, Algèbre commutative, chapitre VII.",
+      "@bib:Bourbaki1971c, § 1, п. 7": "Локатор в Bourbaki, Algèbre commutative, chapitre III."
+    },
+    "content/38-orders-semisimple-algebras.typ": {
+      "Бурбаки @bib:Bourbaki1971e, § 4, п. 1, предложение 3": "Локатор в Bourbaki, Algèbre commutative, chapitre VII."
+    },
+    "content/18-direct-limits.typ": {
+      "#cite(<MacLane2004>, form: \"full\"), § 9.3, теорема 1": "Локатор в Маклейн, Категории для работающего математика, 2004."
+    },
+    "content/147-exact-k-sequences-notes.typ": {
+      "теоремы~(7.2) работы #name-idx(\"Басс (Bass H.)\")Басса и #name-idx(\n  \"Мурты (Murthy M. P.)\",\n)Мурты~@bib:Bass1967b": "Локатор в Bass–Murthy, Grothendieck groups and Picard groups of abelian group rings, 1967."
+    },
+    "content/136-dedekind-reciprocity-laws.typ": {
+      "Серр @bib:Serre1959, гл. III, §1": "Локатор в Серр, Алгебраические группы и поля классов, 1959.",
+      "Серра @bib:Serre1959 (гл. III, §4)": "Локатор в Серр, Алгебраические группы и поля классов, 1959."
+    },
+    "content/137-number-field-reciprocity.typ": {
+      "предложение (A.17) (см. также (3.1)) из работы Басса, Милнора, Серра @bib:Bass1967a": "Локаторы в Bass–Milnor–Serre, Solution of the congruence subgroup problem, 1967."
+    },
+    "content/105-free-products-firs-cohns-theorem.typ": {
+      "#cite(<Cohn2006>, form: \"full\"), § 2.3, теорему 2.3.1": "Локаторы в P. M. Cohn, Free Ideal Rings and Localization in General Rings, Cambridge University Press, 2006; прочитаны §2.3, теорема2.3.1 и обсуждение на с.117."
+    },
+    "content/165-milnor-fiber-products.typ": {
+      "#cite(<Weibel2013>, form: \"full\"), гл.~II, §~6 (6.1.1, 6.2)": "Локаторы в Charles A. Weibel, The K-book, AMS, 2013: определения II.6.1.1 и II.6.2 прочитаны по тексту."
+    },
+    "content/173-finite-generation-k-g-groups.typ": {
+      "#cite(<Loh2017>, form: \"full\"), следствие 4.2.14": "Локатор в Clara Löh, Geometric Group Theory, Springer, 2017; следствие 4.2.14 прочитано по тексту."
+    },
+    "content/221-vector-bundles.typ": {
+      "Хьюзмоллер @bib:Husemoller1966, гл. 5, (6.2)": "Локатор в D. Husemoller, Fibre Bundles, 1966."
+    },
+    "content/224-vector-bundle-stability.typ": {
+      "Стинрод @bib:Steenrod1951, § 11": "Локатор в N. Steenrod, The Topology of Fibre Bundles, 1951."
+    },
+    "content/225-suspension-bundles-linear-groups.typ": {
+      "Стинрод @bib:Steenrod1951, § 18": "Локатор в N. Steenrod, The Topology of Fibre Bundles, 1951.",
+      "гл. 8, § 8, теорема 8.2 и следствие 8.3.": "Локатор в D. Husemoller, Fibre Bundles, 3rd edition, 1994."
+    },
+    "content/184-classical-induction-theorems.typ": {
+      "Райнера#name-idx(\"Райнер (Reiner I.)\") @bib:Curtis1962 (теорема (42.3)). Для": "Локатор теоремы в Curtis–Reiner, Representation Theory of Finite Groups and Associative Algebras, 1962.",
+      ") и Райнера#name-idx(\"Райнер (Reiner I.)\"), теорема (52.1)). Но, поскольку": "Локатор теоремы в Curtis–Reiner, Representation Theory of Finite Groups and Associative Algebras, 1962."
+    },
+    "content/70-problems.typ": {
+      "гл. 12, § 3 книги Артина и Тейта": "Локатор в Artin–Tate, Class Field Theory, 1961.",
+      "#cite(<Weibel2013>, form: \"full\"), гл. I, § 2, с. 10.": "Локатор в Weibel, The K-book, AMS, 2013; I.2, с.10 проверен по тексту.",
+      "#cite(<Oliver1988>, form: \"full\"), пример 9.8(ii), с. 222.": "Локатор в Oliver, Whitehead Groups of Finite Groups, CUP, 1988; пример9.8(ii) проверен по тексту.",
+      "#cite(<Oliver1988>, form: \"full\"), теоремы 3.3, 3.15 и 4.13 (с. 68, 87–88, 118).": "Локаторы в Oliver, Whitehead Groups of Finite Groups, CUP, 1988; теоремы3.3,3.15,4.13 проверены по тексту."
+    },
+    "content/197-fundamental-theorem.typ": {
+      "), гл.III, теоремы 3.6–3.7; гл.V, теорема 8.2.": "Локаторы в Weibel, The K-book, AMS, 2013; III.3.6–3.7 и V.8.2 проверены по тексту."
+    },
+    "content/199-projective-line-k0.typ": {
+      "), гл.V, теорема 1.5.4.": "Локатор в Weibel, The K-book, AMS, 2013; V.1.5.4 проверен по тексту."
+    }
+  },
+  "local_markup": {
+    "content/diagrams/stable-linear-groups-stable-rank.typ": {
+      "$SR'_n (A, frak(q)) & SR''_n (A, frak(q)) & SR_m (A, frak(q)) \"(для\" m >= n \")\" \\ & SR_n (A, frak(q)) & \\ SR_n (A, frak(q)_0) & & SR_n (A slash frak(q)_0, frak(q) slash frak(q)_0)$,": "Сетка объектов Fletcher: Typstyle меняет её математический режим при разбиении на строки; единая строка сохраняет нативную сетку диаграммы."
+    },
+    "content/diagrams/stable-linear-groups-subgroup-level.typ": {
+      "$& GL_m (A) & GL'_m (A, frak(q)) \\ E_m (A) & & \\ & E_m (A, frak(q)) & GL_m (A, frak(q))$,": "Сетка объектов Fletcher: Typstyle меняет её математический режим при разбиении на строки; единая строка сохраняет нативную сетку диаграммы."
+    },
+    "content/diagrams/projective-k-theory-cartan.typ": {
+      "$group_0 (A) & group_0 (A tensor_R L) \\ group_0 (overline(A)) & group_0 (overline(A) tensor_R L)$,": "Сетка объектов Fletcher: Typstyle меняет её математический режим при разбиении на строки; единая строка сохраняет нативную сетку диаграммы."
+    },
+    "content/diagrams/arithmetic-finiteness-cartan.typ": {
+      "$K_1(A) & K_1(Lambda) & K_0(A,S) & K_0(A) & K_0(Lambda) \\ & G_1(Lambda) & G_0(A,S) & G_0(A) & G_0(Lambda) \\ & & union.sq.big_(frak(p) in X) G_0(A slash frak(p) A)$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы.",
+      "$& K_0(Lambda) & G_0(Lambda) \\ K_0(A) & G_0(A) & \\ & K_0(A slash A frak(p)) & G_0(A slash A frak(p))$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы.",
+      "$K_0(A,T) & K_0(A) & K_0(T^(-1) A) & 0 \\ G_0(A,T) & G_0(A) & G_0(T^(-1) A) & 0$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы."
+    },
+    "content/diagrams/projective-k-theory-determinant.typ": {
+      "$K_1 (A) & K_1 (B) & K'_0 (f) & rankGroup_0 (A) & rankGroup_0 (B) \\ U(A) & U(B) & Pic(f) & Pic(A) & Pic(B)$,": "Сетка объектов Fletcher: Typstyle меняет её математический режим при разбиении на строки; единая строка сохраняет нативную сетку диаграммы."
+    },
+    "content/diagrams/projective-k-theory-milnor.typ": {
+      "$& 0 & 0 & 0 & 0 & 0 & 0 \\ & SK_1 (A) & SK_1 (A_1) plus.o SK_1 (A_2) & SK_1 (A') & SK_0 (A) & SK_0 (A_1) plus.o SK_0 (A_2) & SK_0 (A') \\ & K_1 (A) & K_1 (A_1) plus.o K_1 (A_2) & K_1 (A') & Rk_0 (A) & Rk_0 (A_1) plus.o Rk_0 (A_2) & Rk_0 (A') \\ 0 & U(A) & U(A_1) plus.o U(A_2) & U(A') & Pic(A) & Pic(A_1) plus.o Pic(A_2) & Pic(A') \\ & 0 & 0 & 0 & 0 & 0 & 0$,": "Сетка объектов Fletcher: Typstyle меняет её математический режим при разбиении на строки; единая строка сохраняет нативную сетку диаграммы."
+    },
+    "content/diagrams/projective-k-theory-localization.typ": {
+      "$upperFirst & G_0 (A, S) & upperThird & upperFourth & upperFinal \\ K_1 (lowerPrime) & G_0 (A, S) & K_0 (lowerCategory) & K_0 (lowerPrime)$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы.",
+      "$& & topGroup \\ K_1 (A) & K_1 (S^(-1)A) & K_0 (A, S) & terminalGroup_0 (A) & terminalGroup_0 (S^(-1)A) & finalGroup \\ U(A) & U(S^(-1)A) & Pic(A, S) & Pic(A) & Pic(S^(-1)A) & finalGroup$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы.",
+      "$0 & 0 & 0 & 0 & 0 \\ SK_1 (A) & SK_1 (B) & union.sq.big_(frak(p) in X) tilde(G)_0 (A slash (frak(p) A)) & tilde(Rk)_0 (A) & tilde(Rk)_0 (B) & 0 \\ K_1 (A) & K_1 (B) & union.sq.big_(frak(p) in X) G_0 (A slash (frak(p) A)) & Rk_0 (A) & Rk_0 (B) & 0 \\ U(A) & U(B) & D(R) & Pic(A) & Pic(B) & 0 \\ 0 & 0 & 0 & 0 & 0$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы.",
+      "$& & & 0 \\ SK_1 (A) & SK_1 (B) & union.sq.big_(frak(p) in X) Pic(A slash (frak(p) A)) & tilde(Rk)_0 (A) & 0 \\ & & & Rk_0 (A) \\ & & & Pic(A) \\ & & & 0$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы.",
+      "$K_1 (A) & K_1 (S^(-1)A) & K_0 (A, S) & K_0 (A) & K_0 (S^(-1)A) & upperFinal \\ lowerFirst & G_1 (S^(-1)A) & G_0 (A, S) & G_0 (A) & G_0 (S^(-1)A) & 0$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы.",
+      "$& & G_0 (A, S) \\ K_1 (A) & K_1 (S^(-1)A) & K_0 (A, S) & K_0 (A) & K_0 (S^(-1)A) & 0$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы.",
+      "$G_1 (localizedRing) & G_0 (A, system) & G_0 (A) & G_0 (localizedRing) & 0 \\ U(localizedRing) & divisors & C(A) & finalClass & finalZero$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы."
+    },
+    "content/diagrams/projective-k-theory-fp.typ": {},
+    "content/diagrams/projective-k-theory-exterior.typ": {
+      "$dots & Lambda^n (P) & Lambda^(n-1) (P) & dots & Lambda^1 (P) & Lambda^0 (P) & 0 dots \\ & & & & P & A$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы."
+    },
+    "content/223-compact-space-section-equivalence.typ": {
+      "== Функтор $Gamma:bold(italic(B))(X)->bold(P)(k(X))$ является эквивалентностью для компактных пространств $X$": "Один нативный заголовок с математическим обозначением функтора; Typstyle сохраняет его на одной исходной строке."
+    },
+    "content/diagrams/reciprocity-finiteness-functoriality.typ": {},
+    "content/183-induction-exponents.typ": {
+      "@prop:induction-exponent-dedekind-ring@cond:induction-exponent-dedekind-square,": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы."
+    },
+    "content/184-classical-induction-theorems.typ": {
+      "@prop:induction-exponent-dedekind-ring@cond:induction-exponent-dedekind-square,": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы.",
+      "@th:artin-lam-cyclic-induction-exponents@cond:artin-cyclic-induction-generators.": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы.",
+      "@th:nilpotent-induction-exponent-sylow-product@cond:nilpotent-induction-exponent-sylow-product.": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы.",
+      "$j_(1*) tensor j_(2*): G_L (pi'_1) tensor G_L (pi'_2) -> G_L (pi_1) tensor G_L (pi_2)$.": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы."
+    },
+    "content/185-group-ring-k0-g0-applications.typ": {
+      "@th:artin-lam-cyclic-induction-exponents@cond:artin-cyclic-induction-generators).": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы.",
+      "@th:artin-lam-cyclic-induction-exponents@cond:artin-cyclic-induction-generators": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы.",
+      ")$K_0 (bold(italic(H))_frak(p) (R pi)) -> K_0 (bold(italic(M))_frak(p) (R pi))$.": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы.",
+      "$bold(italic(M))_frak(p) (R pi)=bold(italic(M))_(T^(-1) frak(p)) (T^(-1) R pi)$.": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы.",
+      "U (A slash frak(c)) plus.o U (B) -> U (B slash frak(c)) -> Pic (A) -> Pic (B) -> 0.": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы."
+    },
+    "content/187-group-ring-k1-g1-applications.typ": {
+      "@th:integral-abelian-group-ring-sk1@cond:integral-group-ring-conductor-sk1-roots.": "Typstyle сохраняет одну исходную строку для нативной пары ссылок или единой математической формулы."
+    },
+    "content/diagrams/polynomial-fundamental-theorem-g-zero.typ": {
+      "$K_0 (bold(M)_S (A)) & G_0 (A) & G_0 (S^(-1) A) & 0 \\ K_0 (bold(M)_S (A[t])) & G_0 (A[t]) & G_0 (S^(-1) A[t]) & 0$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы."
+    },
+    "content/diagrams/polynomial-fundamental-theorem-contractions.typ": {
+      "$K_1 (A[T_+]) & K_1 (A[T]) & K_0 (NilCat (bold(P)(A))) & K_0 (A[T_+]) & K_0 (A[T]) \\ & K_0 (A) plus.o N_(T_-) K_1 (A) & K_0 (A) plus.o NilGroup (A) & &$,": "Сетка объектов Fletcher: единая строка сохраняет математический режим нативной сетки диаграммы."
+    },
+    "content/diagrams/polynomial-fundamental-theorem-group-rings.typ": {
+      "$0 & K_1 (A[T_+],J A[T_+]) & K_1 (A[T_+]) & K_1 (B[T_+]) & 0 \\ 0 & U(A[T_+],J A[T_+]) & U(A[T_+]) & U(B[T_+]) & 0$,": "Единая строка нативной сетки объектов Fletcher сохраняет математический режим при форматировании.",
+      "$K_1 (B'[G]) & K_0 (A[G]) & K_0 (A'[G]) plus.o K_0 (B[G]) \\ K_1 (B') & K_0 (A) & K_0 (A') plus.o K_0 (B)$,": "Единая строка нативной сетки объектов Fletcher сохраняет математический режим при форматировании."
+    }
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "headings": [
+    {
+      "label": "ch:stable-linear-groups",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "GLn",
+          "alternate": "GLₙ",
+          "ast_sha256": "024bd8042ae887d37511bdc3a5ba81a1cf989d962e4817d6d4ea55809d8c0d20"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:normal-subgroups-relative-k1",
+      "fragments": [
+        {
+          "equation_ordinal": 1,
+          "native_fragment": "K1 (A, q)",
+          "alternate": "K₁(A, 𝔮)",
+          "ast_sha256": "aa4c808b89557ba44ad0a15659b88b91b9f07ce78f6ec05d6301a59d8372556d"
+        }
+      ],
+      "required_heading_glyphs": [
+        "𝔮"
+      ]
+    },
+    {
+      "label": "sec:stable-rank-conditions",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "SRn (A, q)",
+          "alternate": "SRₙ(A, 𝔮)",
+          "ast_sha256": "9d631cde441070e9e75aaa542ec8c49ea51156cf7bd925e4da26ab80f4c0c1ba"
+        }
+      ],
+      "required_heading_glyphs": [
+        "𝔮"
+      ]
+    },
+    {
+      "label": "sec:linear-stability-homomorphism-construction",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "χ",
+          "alternate": "χ′",
+          "ast_sha256": "32bb12892b0aa6f5093756952b5515d1111116f020de403f7094dfe372d4835b"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:linear-stability-homomorphism-normalizer",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "χ",
+          "alternate": "χ′",
+          "ast_sha256": "32bb12892b0aa6f5093756952b5515d1111116f020de403f7094dfe372d4835b"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:universal-mennicke-symbols",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "ba",
+          "alternate": "[b; a]",
+          "ast_sha256": "dda169256c46f6a14a7fcfbf49691dcfc6e53307296250f09f1efdfad2e77eae"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:relative-mennicke-symbols",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "ba",
+          "alternate": "[𝔟; a]",
+          "ast_sha256": "0c9ef0ede8c72d0117127ceac9cccd158063704d0983fc0a05477a613f0c8d98"
+        }
+      ],
+      "required_heading_glyphs": [
+        "𝔟"
+      ]
+    },
+    {
+      "label": "sec:cofinal-functors",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "K1",
+          "alternate": "K₁",
+          "ast_sha256": "5dea83328abbd6a679c54e2ebe6aebfa6d0a36e7e5239228857bc9427da2f16d"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:projective-k-functoriality",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "Ki A",
+          "alternate": "Kᵢ A",
+          "ast_sha256": "297bd56f036ef1f0695223d7ccb0dcd352c647a875f993637755efe5064742dd"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:g-groups-cartan-maps",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "Gi",
+          "alternate": "Gᵢ",
+          "ast_sha256": "5481edf0aaf1ee9404077f40f0c9559c89cbcf3708f3306ce0baa82967629da5"
+        },
+        {
+          "equation_ordinal": 1,
+          "native_fragment": "Ki → Gi",
+          "alternate": "Kᵢ → Gᵢ",
+          "ast_sha256": "ebdae6e6ce439ce1d9e90ae426797bf17b0c54f046d35aced47ee69e8c4f4f24"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:rank-determinant-picard",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "K0 → H0",
+          "alternate": "K₀ → H₀",
+          "ast_sha256": "65f6ce3fab0d40a74963696e9362da116f6a7aa6c099224f25339b8b2f8b64f8"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:finite-generation-k-g-groups",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "K1",
+          "alternate": "K₁",
+          "ast_sha256": "5dea83328abbd6a679c54e2ebe6aebfa6d0a36e7e5239228857bc9427da2f16d"
+        },
+        {
+          "equation_ordinal": 1,
+          "native_fragment": "G1",
+          "alternate": "G₁",
+          "ast_sha256": "f9e51d3f21bb77a1c546b6c46500cdcf558079a55600cf3899e2396f49b35e4b"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:group-ring-k0-g0-applications",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "K0 (R π)",
+          "alternate": "K₀(Rπ)",
+          "ast_sha256": "06fe5f83fa2b84acd632fa71e6976377ad393bb2fc2d904f608aea91aeea87e2"
+        },
+        {
+          "equation_ordinal": 1,
+          "native_fragment": "G0 (R π)",
+          "alternate": "G₀(Rπ)",
+          "ast_sha256": "18c5608df65c9117fd4988736cd6bba0f988b2217bdb584173d93dbaa55fca3e"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:group-ring-k1-g1-applications",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "K1 (R π)",
+          "alternate": "K₁(Rπ)",
+          "ast_sha256": "3fafc70723b8abe7050823579e0ffcefba74a993cb933b1faaef684a6acd61cf"
+        },
+        {
+          "equation_ordinal": 1,
+          "native_fragment": "G1 (R π)",
+          "alternate": "G₁(Rπ)",
+          "ast_sha256": "21d67ee2c76a5745176c5da2bcb6c0bd33d0824fa2403af48e64c0df331e49aa"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:serre-polynomial-k0",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "K0 (A[T])",
+          "alternate": "K₀(A[T])",
+          "ast_sha256": "4f78c8ac89533b16238197b78a93fa87336de149b80ee1371df223c30e49f2ce"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:grothendieck-polynomial-g0",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "G0 (A[T])",
+          "alternate": "G₀(A[T])",
+          "ast_sha256": "d6aa9672f59841d5bc6ddd8d66824098acc79adafef1bfb9a57a064bf9109371"
+        }
+      ],
+      "required_heading_glyphs": []
+    },
+    {
+      "label": "sec:projective-line-k0",
+      "fragments": [
+        {
+          "equation_ordinal": 0,
+          "native_fragment": "K0",
+          "alternate": "K₀",
+          "ast_sha256": "d228392cf7ab1ac6ae979166585f0e975222f963ca596e9778bc6051f529f0d2"
+        }
+      ],
+      "required_heading_glyphs": []
+    }
+  ]
+}
