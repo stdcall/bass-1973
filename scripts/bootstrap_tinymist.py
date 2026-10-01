@@ -134,7 +134,8 @@ def validate(entry, inputs, key, *, return_sha=False):
     receipt_path = entry / 'fixtures/receipt.json'
     checked(receipt_path, manifest['fixture_receipt_sha256'])
     receipt = json.loads(receipt_path.read_text())
-    cases = {name + ':' + fmt for name in ('pass', 'warnings', 'compiler-error', 'dynamic')
+    cases = {name + ':' + fmt for name in ('pass', 'warnings', 'compiler-error', 'dynamic',
+             'cap-0', 'cap-9', 'cap-10', 'cap-error-after-10')
              for fmt in ('short', 'human')}
     if receipt['status'] != 'differential_pass' or set(receipt['results']) != cases:
         raise ValueError('Native diagnostic fixture gate incomplete')

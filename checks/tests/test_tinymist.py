@@ -59,7 +59,8 @@ class Guards(unittest.TestCase):
         binary = entry / 'bin/tinymist'
         binary.write_bytes(b'candidate')
         cases = {name + ':' + fmt: {'whole_output_exact': True, 'expectations_passed': True}
-                 for name in ('pass', 'warnings', 'compiler-error', 'dynamic')
+                 for name in ('pass', 'warnings', 'compiler-error', 'dynamic',
+                              'cap-0', 'cap-9', 'cap-10', 'cap-error-after-10')
                  for fmt in ('short', 'human')}
         receipt = {'status': 'differential_pass', 'results': cases,
                    'binaries': {'candidate': {'sha256': module.sha(binary)},
@@ -103,6 +104,17 @@ class Guards(unittest.TestCase):
     def test_missing_output_inventory(self):
         entry, manifest = self.cache()
         manifest['diagnostic_files'] = {}
+        (entry / 'manifest.json').write_text(json.dumps(manifest))
+        with self.assertRaises(ValueError):
+            module.validate(entry, {'pinned': True}, 'key')
+
+    def test_missing_contextual_trace_case(self):
+        entry, manifest = self.cache()
+        path = entry / 'fixtures/receipt.json'
+        receipt = json.loads(path.read_text())
+        del receipt['results']['cap-0:human']
+        path.write_text(json.dumps(receipt))
+        manifest['fixture_receipt_sha256'] = module.sha(path)
         (entry / 'manifest.json').write_text(json.dumps(manifest))
         with self.assertRaises(ValueError):
             module.validate(entry, {'pinned': True}, 'key')

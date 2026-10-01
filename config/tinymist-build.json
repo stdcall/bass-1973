@@ -6,7 +6,7 @@
   },
   "patch": {
     "file": "../assets/tinymist/cache-policy.patch",
-    "sha256": "fa0fe2a4a0654b57c9784701dcec84e51748ce318bb71cfda68fd65070ced365"
+    "sha256": "5983a6b968080a65230c3eeba67ffd20093d49a2e6ebc4d9c413299b69a836df"
   },
   "cargo_lock_sha256": "a6445d7271849ef45468b191f77d839ad0add5fcdf915e3c8329fb1e313dd911",
   "patched_files": {
@@ -16,7 +16,7 @@
     },
     "crates/tinymist-analysis/src/track_values.rs": {
       "before": "4fe355e658209e5b9bbd72e6f1a86fb9cdbd983514f085877dfa3304ad853884",
-      "after": "d5c039fac2f72987070fb5d7cf40f22bed82f1e102952f1f55b9859df17d8d87"
+      "after": "2daf43be49c9e475f81b168f9ca950bd29300e0c47c995a4a03447a62065ea7e"
     }
   },
   "fixture_helper": "../scripts/check_native_lint.py",

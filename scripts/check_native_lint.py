@@ -38,6 +38,18 @@ SOURCES = {
     'nested/dynamic-module.typ': '#let exported-text() = [Динамический импорт.]\n#let dead() = $dynamicunknownmath$\n',
     'nested/nested-import.typ': '#import "second-level.typ": second-text\n#let nested-text() = second-text()\n',
     'nested/second-level.typ': '#let second-text() = [Импорт второго уровня.]\n#let dead() = $secondlevelunknownmath$\n',
+    'cap-loader.typ': '''#let load(path) = {
+  import path: *
+  let dead-valid() = $binding$
+  ""
+}
+''',
+    'cap-early.typ': '#let binding = 1\n#let dead() = $earlyunknownmath$\n',
+    'cap-late.typ': '#let binding = 2\n#let dead() = $lateunknownmath$\n',
+    'cap-0.typ': '#import "cap-loader.typ": load\n#context load("cap-late.typ")\n',
+    'cap-9.typ': '#import "cap-loader.typ": load\n#for i in range(9) { load("cap-early.typ") }\n#context load("cap-late.typ")\n',
+    'cap-10.typ': '#import "cap-loader.typ": load\n#for i in range(10) { load("cap-early.typ") }\n#context load("cap-late.typ")\n',
+    'cap-error-after-10.typ': '#import "cap-loader.typ": load\n#for i in range(10) { load("cap-early.typ") }\n#panic("deliberate error after repeated dynamic imports")\n',
 }
 CASES = {
     'pass': {'entry': 'pass.typ', 'exit': 0, 'required': []},
@@ -50,6 +62,26 @@ CASES = {
         'compilerunknownmath', 'unusedunknownmath', 'nested/compiler-error.typ', 'nested/warnings.typ']},
     'dynamic': {'entry': 'dynamic.typ', 'exit': 1, 'required': [
         'dynamicunknownmath', 'secondlevelunknownmath', 'nested/dynamic-module.typ', 'nested/second-level.typ']},
+    'cap-0': {'entry': 'cap-0.typ', 'exit': 1,
+        'required': ['unknown variable: lateunknownmath'],
+        'required_diagnostics': ['cap-late.typ:2:15: warning: unknown variable: lateunknownmath'],
+        'forbidden': ['unknown variable: binding']},
+    'cap-9': {'entry': 'cap-9.typ', 'exit': 1,
+        'required': ['unknown variable: lateunknownmath', 'unknown variable: earlyunknownmath'],
+        'required_diagnostics': ['cap-late.typ:2:15: warning: unknown variable: lateunknownmath',
+                                 'cap-early.typ:2:15: warning: unknown variable: earlyunknownmath'],
+        'forbidden': ['unknown variable: binding']},
+    'cap-10': {'entry': 'cap-10.typ', 'exit': 1,
+        'required': ['unknown variable: lateunknownmath', 'unknown variable: earlyunknownmath'],
+        'required_diagnostics': ['cap-late.typ:2:15: warning: unknown variable: lateunknownmath',
+                                 'cap-early.typ:2:15: warning: unknown variable: earlyunknownmath'],
+        'forbidden': ['unknown variable: binding']},
+    'cap-error-after-10': {'entry': 'cap-error-after-10.typ', 'exit': 1,
+        'required': ['unknown variable: earlyunknownmath',
+                     'error: panicked with: deliberate error after repeated dynamic imports'],
+        'required_diagnostics': ['cap-early.typ:2:15: warning: unknown variable: earlyunknownmath',
+                                 'cap-error-after-10.typ:3:1: error: panicked with: deliberate error after repeated dynamic imports'],
+        'forbidden': ['unknown variable: binding']},
 }
 
 def sha(path):
@@ -106,14 +138,19 @@ def main():
                 output = normalized['stdout'] + normalized['stderr']
                 results[role] = {'command': command, 'exit': run.returncode,
                     'elapsed_seconds': time.monotonic() - started, **normalized,
-                    'required_messages_present': all(item in output for item in case['required'])}
+                    'required_messages_present': all(item in output for item in case['required']),
+                    'forbidden_messages_absent': all(item not in output for item in case.get('forbidden', []))}
                 if fmt == 'short':
                     # These are complete native diagnostics, not string matches in hints.
                     lines = output.splitlines()
                     diagnostics = [line for line in lines if re.search(r': (error|warning): ', line)]
-                    expected_counts = {'pass': 0, 'warnings': 10, 'compiler-error': 11, 'dynamic': 2}
+                    expected_counts = {'pass': 0, 'warnings': 10, 'compiler-error': 11, 'dynamic': 2,
+                                       'cap-0': 1, 'cap-9': 2, 'cap-10': 2, 'cap-error-after-10': 2}
                     results[role]['diagnostic_count'] = len(diagnostics)
                     results[role]['diagnostic_count_passed'] = len(diagnostics) == expected_counts[name]
+                    results[role]['required_diagnostics_present'] = all(
+                        any(line.endswith(item) for line in diagnostics)
+                        for item in case.get('required_diagnostics', []))
                     if name == 'compiler-error':
                         results[role]['known_unknown_ident_single_error'] = sum(
                             'error: unknown variable: compilerunknownmath' in line for line in diagnostics) == 1
@@ -122,15 +159,17 @@ def main():
                         # its compiler warning and enriched lint warning are both retained.
                         results[role]['native_font_diagnostics_retained'] = sum(
                             'warning: unknown font family:' in line for line in diagnostics) == 2
-                if name in ('pass', 'warnings', 'dynamic'):
+                if name not in ('compiler-error', 'cap-error-after-10'):
                     results[role]['no_compiler_error'] = not bool(re.search(r'(^|\n)(?:[^\n]*: )?error:', output))
                 else:
                     results[role]['compiler_error_present'] = bool(re.search(r'(^|\n)(?:[^\n]*: )?error:', output))
             left, right = results['baseline'], results['candidate']
             exact = all(left[field] == right[field] for field in ('exit', 'stdout', 'stderr'))
             expected = all(result['exit'] == case['exit'] and result['required_messages_present']
+                and result['forbidden_messages_absent']
                 and result.get('no_compiler_error', result.get('compiler_error_present', False))
                 and result.get('diagnostic_count_passed', True)
+                and result.get('required_diagnostics_present', True)
                 and result.get('known_unknown_ident_single_error', True)
                 and result.get('native_font_diagnostics_retained', True)
                 for result in results.values())
