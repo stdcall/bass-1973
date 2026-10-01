@@ -1,7 +1,6 @@
 {
   "entry": "content/main.typ",
   "output": "build/bass-1973.pdf",
-  "cache": "~/.cache/bass-1973",
   "stage": "final",
   "pdf_navigation": {
     "outline_left": 0
