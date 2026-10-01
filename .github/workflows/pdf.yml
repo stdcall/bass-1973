@@ -43,6 +43,8 @@ jobs:
           with open(os.environ['GITHUB_PATH'], 'a') as stream:
               stream.write(str(target)+'\n')
       - name: Check and build
+        env:
+          PYTHONUNBUFFERED: '1'
         run: uv run --locked python scripts/project.py check
       - name: Checksums of the published PDFs
         working-directory: build

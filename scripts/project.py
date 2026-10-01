@@ -154,15 +154,20 @@ def main():
     if command == 'build-no-notes':
         build(force=args.force, notes=False)
         return
+    print('Check: main edition', flush=True)
     build(force=args.force or command == 'check',
           thorough=command == 'check')
     if command == 'check':
+        print('Check: unit tests', flush=True)
         tests()
         from check_lsp import check
+        print('Check: LSP', flush=True)
         check()
+        print('Check: corrections edition', flush=True)
         build_corrections()
         # The no-notes edition must build as well: a label or a reference
         # target inside an editorial note would vanish with the note.
+        print('Check: no-notes edition', flush=True)
         build(force=True, notes=False)
 
 

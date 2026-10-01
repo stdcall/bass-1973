@@ -37,6 +37,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def run(args):
+    print('Check: '+' '.join(args[:2]), flush=True)
     result = subprocess.run(args, cwd=ROOT, env=tool_env(ROOT),
                             capture_output=True, text=True)
     if result.returncode:
@@ -566,6 +567,7 @@ def build(force=False, thorough=False, exported=None, notes=True):
                 state['pdf_sha256'] == digest(output):
             print('PDF is current: '+str(output.relative_to(ROOT)))
             return
+    print(f'Check: lint gate (notes={notes})', flush=True)
     ensure_lint(fingerprint)
     start = time.perf_counter()
     raw = cache/f'book{variant}-raw.pdf'
@@ -578,6 +580,7 @@ def build(force=False, thorough=False, exported=None, notes=True):
             raise RuntimeError('Tinymist produced no PDF at '+str(exported)
                                + '; inspect its export task log.')
         shutil.copyfile(exported, raw)
+    print(f'Check: PDF finalization (notes={notes})', flush=True)
     raw_reader = PdfReader(raw)
     assert '/StructTreeRoot' in raw_reader.trailer['/Root'], \
         'PDF accessibility tags missing'
@@ -602,6 +605,7 @@ def build(force=False, thorough=False, exported=None, notes=True):
     report = normalize_outlines(raw, staged, references=references,
                                 divisions=divisions, headings=document['headings'],
                                 math_alternates=math_alternates)
+    print(f'Check: PDF links (notes={notes})', flush=True)
     links = check_links(staged, references)
     # A problem's head leads to its hint and the hint's number back.
     links['hint_links'] = check_hint_links(
@@ -681,6 +685,7 @@ def build_corrections():
     output = ROOT/config['corrections_output']
     output.parent.mkdir(parents=True, exist_ok=True)
     staged = cache/'corrections-checked.pdf'
+    print('Check: corrections PDF finalization', flush=True)
     report = normalize_outlines(raw, staged, book=False)
     report['output_sha256'] = digest(staged)
     shutil.move(staged, output)

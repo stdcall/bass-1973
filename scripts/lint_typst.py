@@ -1211,6 +1211,8 @@ def evaluate(root=ROOT, *, notes=True, labels=None):
         head = EXPRESSION.rstrip()[:-1].rstrip().rstrip(',')
         expression = (head + ',\n  labelled: '
                       + LABELLED.replace('LABELS', names) + ',\n)')
+    print(f'Check: Typst evaluation (notes={notes}, '
+          f'labels={len(labels or [])})', flush=True)
     result = subprocess.run(
         ['typst', 'eval', *typst_inputs(root, notes=notes), expression,
          '--in', settings(root)['entry'], '--format', 'json'],
@@ -1240,6 +1242,7 @@ def lint(root=ROOT):
                              'message': f'Missing {cmd[0]}; install with '
                                         'brew install tinymist typstyle'})
             continue
+        print('Check: upstream '+cmd[0], flush=True)
         checked = subprocess.run(cmd, cwd=root, env=tool_env(root),
                                  capture_output=True, text=True, timeout=600)
         output = checked.stdout + checked.stderr
