@@ -9,7 +9,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - name: Configure build cache
         run: printf 'BOOK_BUILD_CACHE=%s/bass-1973-cache\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
@@ -49,8 +49,27 @@ jobs:
           rustup toolchain install 1.97.0 --profile minimal
           rust_toolchain="$(rustup run 1.97.0 rustc --print sysroot)"
           printf '%s\n' "$rust_toolchain/bin" >> "$GITHUB_PATH"
+      - name: Identify pinned Tinymist cache
+        id: tinymist-cache
+        run: |
+          native_cache="$BOOK_BUILD_CACHE/tools/tinymist"
+          fingerprint="$(uv run --locked python scripts/bootstrap_tinymist.py fingerprint \
+            --config config/tinymist-build.json --cache "$native_cache")"
+          printf 'key=%s\npath=%s/%s\n' "$fingerprint" "$native_cache" "$fingerprint" >> "$GITHUB_OUTPUT"
+      - name: Restore pinned Tinymist
+        id: tinymist-restore
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          key: bass-1973-tinymist-${{ steps.tinymist-cache.outputs.key }}
+          path: ${{ steps.tinymist-cache.outputs.path }}
       - name: Build and verify pinned Tinymist
         run: uv run --locked python scripts/project.py tools
+      - name: Save verified Tinymist
+        if: steps.tinymist-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          key: bass-1973-tinymist-${{ steps.tinymist-cache.outputs.key }}
+          path: ${{ steps.tinymist-cache.outputs.path }}
       - name: Reserve memory for complete book checks
         run: |
           findmnt -T "$RUNNER_TEMP"

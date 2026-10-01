@@ -1249,8 +1249,12 @@ def lint(root=ROOT):
                                         'brew install tinymist typstyle'})
             continue
         print('Check: upstream '+cmd[0], flush=True)
+        # Complete native analysis can exceed ten minutes when evicted
+        # caches are recomputed on a memory-constrained runner.
+        timeout = 1800 if cmd[0] == 'tinymist' else 600
         checked = subprocess.run(cmd, cwd=root, env=tool_env(root),
-                                 capture_output=True, text=True, timeout=600)
+                                 capture_output=True, text=True,
+                                 timeout=timeout)
         output = checked.stdout + checked.stderr
         upstream.append({'command': cmd, 'exit_code': checked.returncode,
                          'diagnostics': output,
