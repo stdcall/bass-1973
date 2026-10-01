@@ -27,7 +27,7 @@
       "Бурбаки @bib:Bourbaki1971e, § 4, п. 1, предложение 3": "Локатор в Bourbaki, Algèbre commutative, chapitre VII."
     },
     "content/18-direct-limits.typ": {
-      "#cite(<MacLane2004>, form: \"full\"), § 9.3, теорема 1": "Локатор в Маклейн, Категории для работающего математика, 2004."
+      "Маклейн @bib:MacLane2004, § 9.3, теорема 1": "Локатор в Маклейн, Категории для работающего математика, 2004."
     },
     "content/147-exact-k-sequences-notes.typ": {
       "теоремы~(7.2) работы #name-idx(\"Басс (Bass H.)\")Басса и #name-idx(\n  \"Мурты (Murthy M. P.)\",\n)Мурты~@bib:Bass1967b": "Локатор в Bass–Murthy, Grothendieck groups and Picard groups of abelian group rings, 1967."
@@ -40,13 +40,13 @@
       "предложение (A.17) (см. также (3.1)) из работы Басса, Милнора, Серра @bib:Bass1967a": "Локаторы в Bass–Milnor–Serre, Solution of the congruence subgroup problem, 1967."
     },
     "content/105-free-products-firs-cohns-theorem.typ": {
-      "#cite(<Cohn2006>, form: \"full\"), § 2.3, теорему 2.3.1": "Локаторы в P. M. Cohn, Free Ideal Rings and Localization in General Rings, Cambridge University Press, 2006; прочитаны §2.3, теорема2.3.1 и обсуждение на с.117."
+      "Кон @bib:Cohn2006, § 2.3, теорему 2.3.1": "Локаторы в P. M. Cohn, Free Ideal Rings and Localization in General Rings, Cambridge University Press, 2006; прочитаны §2.3, теорема2.3.1 и обсуждение на с.117."
     },
     "content/165-milnor-fiber-products.typ": {
-      "#cite(<Weibel2013>, form: \"full\"), гл.~II, §~6 (6.1.1, 6.2)": "Локаторы в Charles A. Weibel, The K-book, AMS, 2013: определения II.6.1.1 и II.6.2 прочитаны по тексту."
+      "Вайбель @bib:Weibel2013, гл.~II, §~6 (6.1.1, 6.2)": "Локаторы в Charles A. Weibel, The K-book, AMS, 2013: определения II.6.1.1 и II.6.2 прочитаны по тексту."
     },
     "content/173-finite-generation-k-g-groups.typ": {
-      "#cite(<Loh2017>, form: \"full\"), следствие 4.2.14": "Локатор в Clara Löh, Geometric Group Theory, Springer, 2017; следствие 4.2.14 прочитано по тексту."
+      "Лё @bib:Loh2017, следствие 4.2.14": "Локатор в Clara Löh, Geometric Group Theory, Springer, 2017; следствие 4.2.14 прочитано по тексту."
     },
     "content/221-vector-bundles.typ": {
       "Хьюзмоллер @bib:Husemoller1966, гл. 5, (6.2)": "Локатор в D. Husemoller, Fibre Bundles, 1966."
@@ -64,15 +64,15 @@
     },
     "content/70-problems.typ": {
       "гл. 12, § 3 книги Артина и Тейта": "Локатор в Artin–Tate, Class Field Theory, 1961.",
-      "#cite(<Weibel2013>, form: \"full\"), гл. I, § 2, с. 10.": "Локатор в Weibel, The K-book, AMS, 2013; I.2, с.10 проверен по тексту.",
-      "#cite(<Oliver1988>, form: \"full\"), пример 9.8(ii), с. 222.": "Локатор в Oliver, Whitehead Groups of Finite Groups, CUP, 1988; пример9.8(ii) проверен по тексту.",
-      "#cite(<Oliver1988>, form: \"full\"), теоремы 3.3, 3.15 и 4.13 (с. 68, 87–88, 118).": "Локаторы в Oliver, Whitehead Groups of Finite Groups, CUP, 1988; теоремы3.3,3.15,4.13 проверены по тексту."
+      "Вайбель @bib:Weibel2013, гл. I, § 2, с. 10.": "Локатор в Weibel, The K-book, AMS, 2013; I.2, с.10 проверен по тексту.",
+      "Оливер @bib:Oliver1988, пример 9.8(ii), с. 222.": "Локатор в Oliver, Whitehead Groups of Finite Groups, CUP, 1988; пример9.8(ii) проверен по тексту.",
+      "Оливер @bib:Oliver1988, теоремы 3.3, 3.15 и 4.13 (с. 68, 87–88, 118).": "Локаторы в Oliver, Whitehead Groups of Finite Groups, CUP, 1988; теоремы3.3,3.15,4.13 проверены по тексту."
     },
     "content/197-fundamental-theorem.typ": {
-      "), гл.III, теоремы 3.6–3.7; гл.V, теорема 8.2.": "Локаторы в Weibel, The K-book, AMS, 2013; III.3.6–3.7 и V.8.2 проверены по тексту."
+      "Вайбель @bib:Weibel2013, гл.III, теоремы 3.6–3.7; гл.V, теорема 8.2.": "Локаторы в Weibel, The K-book, AMS, 2013; III.3.6–3.7 и V.8.2 проверены по тексту."
     },
     "content/199-projective-line-k0.typ": {
-      "), гл.V, теорема 1.5.4.": "Локатор в Weibel, The K-book, AMS, 2013; V.1.5.4 проверен по тексту."
+      "Вайбель @bib:Weibel2013, гл.V, теорема 1.5.4.": "Локатор в Weibel, The K-book, AMS, 2013; V.1.5.4 проверен по тексту."
     }
   },
   "local_markup": {
