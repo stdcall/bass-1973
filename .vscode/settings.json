@@ -22,7 +22,7 @@
   "tinymist.projectResolution": "lockDatabase",
   "tinymist.exportPdf": "onSave",
   "tinymist.outputPath": "$root/build/.cache/$name",
-  "tinymist.lint.enabled": true,
+  "tinymist.lint.enabled": false,
   "tinymist.lint.when": "onSave",
   "tinymist.preview.refresh": "onType",
   "tinymist.preview.scrollSync": "onSelectionChangeByMouse",
