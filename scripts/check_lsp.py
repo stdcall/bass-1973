@@ -28,7 +28,7 @@ from urllib.parse import unquote, urlparse
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from lint_typst import CITED, MARKUP, scan, evaluate  # noqa: E402
-from project import stage, typst_inputs  # noqa: E402
+from project import stage, typst_inputs, tool_env  # noqa: E402
 
 REFERENCE = re.compile(r'@([a-z][\w-]*:[\w:.-]+)')
 # Wrappers of references of older setups; the book writes `@label`.
@@ -74,6 +74,7 @@ def references(root):
 
 
 def check(root=ROOT):
+    env = tool_env(root)
     cases = references(root)
     pending = []
     if stage(root) == 'draft':
@@ -94,7 +95,7 @@ def check(root=ROOT):
                         '--save-lock', '--root', '.',
                         '--font-path', 'assets/fonts', 'content/main.typ',
                         str(Path(tmp) / 'book.pdf')], cwd=root, check=True,
-                       stdout=subprocess.DEVNULL, stderr=log)
+                       stdout=subprocess.DEVNULL, stderr=log, env=env)
         log.flush()
         log.seek(0)
         compile_log = log.read().decode(errors='replace')
@@ -109,7 +110,7 @@ def check(root=ROOT):
                 + compile_log)
         process = subprocess.Popen(['tinymist', 'lsp'], cwd=root,
                                    stdin=subprocess.PIPE,
-                                   stdout=subprocess.PIPE, stderr=log)
+                                   stdout=subprocess.PIPE, stderr=log, env=env)
         inbox = queue.Queue()
         events = []
         serial = 0

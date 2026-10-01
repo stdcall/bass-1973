@@ -1,0 +1,25 @@
+--- a/crates/tinymist-cli/src/cmd/lint.rs
++++ b/crates/tinymist-cli/src/cmd/lint.rs
+@@ -44,6 +44,9 @@
+     let compiled = CompiledArtifact::from_graph(graph, false);
+     let compiler_diagnostics = compiled.diagnostics().cloned().collect::<Vec<_>>();
+ 
++    // No subsequent lint rule needs memoized layout intermediates.
++    comemo::evict(0);
++
+     let lint_diagnostics = analysis
+         .query_snapshot(compiled.graph.clone(), None)
+         .run_analysis(|ctx| {
+--- a/crates/tinymist-analysis/src/track_values.rs
++++ b/crates/tinymist-analysis/src/track_values.rs
+@@ -55,7 +55,9 @@
+             }
+ 
+             let _guard = GLOBAL_STATS.stat(node.span().id(), "analyze_expr");
+-            return typst::trace::<TypstPagedDocument>(world, node.span());
++            let traced = typst::trace::<TypstPagedDocument>(world, node.span());
++            comemo::evict(1);
++            return traced;
+         }
+     };
+ 

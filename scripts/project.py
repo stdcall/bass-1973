@@ -60,7 +60,9 @@ def tool_env(root=ROOT):
     env['TYPST_ROOT'] = str(root)
     env['TYPST_FONT_PATHS'] = os.pathsep.join(
         str(root/p) for p in settings(root)['font_paths'])
-    return env
+    from bootstrap_tinymist import selected_environment
+    return selected_environment(root/settings(root)['tinymist_build'],
+                                cache_path(root)/'tools/tinymist', env)
 
 
 def editor_settings(root=ROOT):
@@ -112,7 +114,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=[
         'fmt', 'lint', 'build', 'build-no-notes', 'check', 'test',
-        'corrections', 'clean', 'editor-prepare', 'editor-finish'])
+        'corrections', 'clean', 'tools', 'editor-prepare', 'editor-finish'])
     parser.add_argument('--force', action='store_true',
                         help='rebuild even when the PDF is current')
     args = parser.parse_args()
@@ -123,6 +125,14 @@ def main():
         shutil.rmtree(cache_path(), ignore_errors=True)
         return
     cache_path().mkdir(parents=True, exist_ok=True)
+    if command == 'tools':
+        from bootstrap_tinymist import install
+        config_path = ROOT/settings()['tinymist_build']
+        binary = install(json.loads(config_path.read_text()),
+                         config_path.parent,
+                         cache_path()/'tools/tinymist', ROOT)
+        print('Pinned Tinymist: '+str(binary))
+        return
     if command == 'fmt':
         run(formatter_command(inplace=True))
         return

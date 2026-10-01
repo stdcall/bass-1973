@@ -34,13 +34,14 @@
       "sha256": "213c11bc2c64f7237c382b4bb1d06991530ed9d44d3a05204ca3c19615d55b99"
     },
     "tinymist": {
-      "url": "https://github.com/Myriad-Dreamin/tinymist/releases/download/v0.15.8/tinymist-x86_64-unknown-linux-musl.tar.gz",
-      "sha256": "816d33895ae343f934403dbd73f687a531368464450451510f3c108b0c04bcfd",
+      "url": "https://github.com/Myriad-Dreamin/tinymist/releases/download/v0.15.8/tinymist-x86_64-unknown-linux-gnu.tar.gz",
+      "sha256": "2428932e8d8b593ebc1ac4eed41fb9d3584166e1044bbcdef740b7296c348295",
       "archive": true
     }
   },
   "prose": {
     "checker": "vale",
     "language": "ru"
-  }
+  },
+  "tinymist_build": "config/tinymist-build.json"
 }

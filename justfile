@@ -5,6 +5,10 @@ python := "uv run --locked python"
 
 default: build
 
+# Build the pinned native tool and compare all diagnostic fixture outputs.
+tools:
+    {{python}} scripts/project.py tools
+
 # Validated PDF, with cached no-op when source files have not changed.
 build:
     {{python}} scripts/project.py build

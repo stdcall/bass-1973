@@ -1161,9 +1161,15 @@ def input_hashes(root):
 
 
 def tool_versions(root=ROOT):
-    return {name: subprocess.run([name, '--version'], capture_output=True,
-                                 text=True).stdout.strip()
-            for name in settings(root)['tool_versions']}
+    env = tool_env(root)
+    versions = {name: subprocess.run([name, '--version'], env=env,
+                                    capture_output=True, check=True,
+                                    text=True).stdout.strip()
+                for name in settings(root)['tool_versions']}
+    versions['tinymist_build'] = {
+        'fingerprint': env['BASS_TINYMIST_FINGERPRINT'],
+        'binary_sha256': env['BASS_TINYMIST_SHA256']}
+    return versions
 
 
 EXPRESSION = '''(
@@ -1237,7 +1243,7 @@ def lint(root=ROOT):
         formatter_command(root, check=True),
     ]
     for cmd in commands:
-        if not shutil.which(cmd[0]):
+        if not shutil.which(cmd[0], path=tool_env(root)['PATH']):
             findings.append({'rule': 'T000', 'path': 'content/main.typ',
                              'message': f'Missing {cmd[0]}; install with '
                                         'brew install tinymist typstyle'})
