@@ -41,5 +41,6 @@
   "prose": {
     "checker": "vale",
     "language": "ru"
-  }
+  },
+  "tinymist_build": "config/tinymist-build.json"
 }

@@ -1,0 +1,58 @@
+diff --git a/crates/tinymist-analysis/src/track_values.rs b/crates/tinymist-analysis/src/track_values.rs
+index 23be73d..7733353 100644
+--- a/crates/tinymist-analysis/src/track_values.rs
++++ b/crates/tinymist-analysis/src/track_values.rs
+@@ -55,13 +55,38 @@ pub fn analyze_expr_(world: &dyn World, node: &SyntaxNode) -> EcoVec<(Value, Opt
+             }
+ 
+             let _guard = GLOBAL_STATS.stat(node.span().id(), "analyze_expr");
+-            return typst::trace::<TypstPagedDocument>(world, node.span());
++            let traced = saturated_main_eval_trace(world, node.span())
++                .unwrap_or_else(|| typst::trace::<TypstPagedDocument>(world, node.span()));
++            comemo::evict(1);
++            return traced;
+         }
+     };
+ 
+     eco_vec![(val, None)]
+ }
+ 
++/// Return a complete trace only when its exact main-evaluation prefix has
++/// already reached the upstream sink limit. Otherwise retain full compilation.
++fn saturated_main_eval_trace(
++    world: &dyn World,
++    span: Span,
++) -> Option<EcoVec<(Value, Option<Styles>)>> {
++    let main = world.source(world.main()).ok()?;
++    let traced = Traced::new(span);
++    let mut sink = Sink::new();
++    typst_shim::eval::eval(
++        world.track(),
++        world.library(),
++        traced.track(),
++        sink.track_mut(),
++        Route::default().track(),
++        &main,
++    )
++    .ok();
++    let values = sink.values();
++    (values.len() == Sink::MAX_VALUES).then_some(values)
++}
++
+ /// Try to load a module from the current source file.
+ #[typst_macros::time(span = source.span())]
+ pub fn analyze_import_(world: &dyn World, source: &SyntaxNode) -> (Option<Value>, Option<Value>) {
+diff --git a/crates/tinymist-cli/src/cmd/lint.rs b/crates/tinymist-cli/src/cmd/lint.rs
+index 4f2354c..df91d30 100644
+--- a/crates/tinymist-cli/src/cmd/lint.rs
++++ b/crates/tinymist-cli/src/cmd/lint.rs
+@@ -44,6 +44,9 @@ pub fn lint_main(args: LintArgs) -> Result<()> {
+     let compiled = CompiledArtifact::from_graph(graph, false);
+     let compiler_diagnostics = compiled.diagnostics().cloned().collect::<Vec<_>>();
+ 
++    // No subsequent lint rule needs memoized layout intermediates.
++    comemo::evict(0);
++
+     let lint_diagnostics = analysis
+         .query_snapshot(compiled.graph.clone(), None)
+         .run_analysis(|ctx| {

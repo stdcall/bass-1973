@@ -1,0 +1,37 @@
+{
+  "source": {
+    "url": "https://codeload.github.com/Myriad-Dreamin/tinymist/tar.gz/32f908199ee17ea295512bbc27166e890c438175",
+    "commit": "32f908199ee17ea295512bbc27166e890c438175",
+    "sha256": "0d528ea5679a1c408d62ca94099fbc85ef8a546e9615f5f063bca1f4618decca"
+  },
+  "patch": {
+    "file": "../assets/tinymist/cache-policy.patch",
+    "sha256": "5983a6b968080a65230c3eeba67ffd20093d49a2e6ebc4d9c413299b69a836df"
+  },
+  "cargo_lock_sha256": "a6445d7271849ef45468b191f77d839ad0add5fcdf915e3c8329fb1e313dd911",
+  "patched_files": {
+    "crates/tinymist-cli/src/cmd/lint.rs": {
+      "before": "863dc479a43f329999ad0ed475213751e7da6ed3c05447e30148571c86da9725",
+      "after": "affd54006505e90b54f40848e501d43e1af06a2ec409bfed364b3ac4d0a8946a"
+    },
+    "crates/tinymist-analysis/src/track_values.rs": {
+      "before": "4fe355e658209e5b9bbd72e6f1a86fb9cdbd983514f085877dfa3304ad853884",
+      "after": "2daf43be49c9e475f81b168f9ca950bd29300e0c47c995a4a03447a62065ea7e"
+    }
+  },
+  "fixture_helper": "../scripts/check_native_lint.py",
+  "references": {
+    "x86_64-unknown-linux-gnu": {
+      "url": "https://github.com/Myriad-Dreamin/tinymist/releases/download/v0.15.8/tinymist-x86_64-unknown-linux-gnu.tar.gz",
+      "sha256": "2428932e8d8b593ebc1ac4eed41fb9d3584166e1044bbcdef740b7296c348295"
+    },
+    "aarch64-apple-darwin": {
+      "url": "https://github.com/Myriad-Dreamin/tinymist/releases/download/v0.15.8/tinymist-aarch64-apple-darwin.tar.gz",
+      "sha256": "c3e8673fe4b7d8d21ad6d90e3c0684317191e1350758f7eaa02b5bde84339885"
+    },
+    "x86_64-apple-darwin": {
+      "url": "https://github.com/Myriad-Dreamin/tinymist/releases/download/v0.15.8/tinymist-x86_64-apple-darwin.tar.gz",
+      "sha256": "0ca702f40c5028d5937e081799a2c07d30c3f8f2ce3e40ce469471856cd6cef1"
+    }
+  }
+}

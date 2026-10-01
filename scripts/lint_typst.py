@@ -1161,9 +1161,15 @@ def input_hashes(root):
 
 
 def tool_versions(root=ROOT):
-    return {name: subprocess.run([name, '--version'], capture_output=True,
-                                 text=True).stdout.strip()
-            for name in settings(root)['tool_versions']}
+    env = tool_env(root)
+    versions = {name: subprocess.run([name, '--version'], env=env,
+                                    capture_output=True, check=True,
+                                    text=True).stdout.strip()
+                for name in settings(root)['tool_versions']}
+    versions['tinymist_build'] = {
+        'fingerprint': env['BASS_TINYMIST_FINGERPRINT'],
+        'binary_sha256': env['BASS_TINYMIST_SHA256']}
+    return versions
 
 
 EXPRESSION = '''(
@@ -1211,6 +1217,8 @@ def evaluate(root=ROOT, *, notes=True, labels=None):
         head = EXPRESSION.rstrip()[:-1].rstrip().rstrip(',')
         expression = (head + ',\n  labelled: '
                       + LABELLED.replace('LABELS', names) + ',\n)')
+    print(f'Check: Typst evaluation (notes={notes}, '
+          f'labels={len(labels or [])})', flush=True)
     result = subprocess.run(
         ['typst', 'eval', *typst_inputs(root, notes=notes), expression,
          '--in', settings(root)['entry'], '--format', 'json'],
@@ -1235,13 +1243,18 @@ def lint(root=ROOT):
         formatter_command(root, check=True),
     ]
     for cmd in commands:
-        if not shutil.which(cmd[0]):
+        if not shutil.which(cmd[0], path=tool_env(root)['PATH']):
             findings.append({'rule': 'T000', 'path': 'content/main.typ',
                              'message': f'Missing {cmd[0]}; install with '
                                         'brew install tinymist typstyle'})
             continue
+        print('Check: upstream '+cmd[0], flush=True)
+        # Complete native analysis can exceed ten minutes when evicted
+        # caches are recomputed on a memory-constrained runner.
+        timeout = 1800 if cmd[0] == 'tinymist' else 600
         checked = subprocess.run(cmd, cwd=root, env=tool_env(root),
-                                 capture_output=True, text=True, timeout=600)
+                                 capture_output=True, text=True,
+                                 timeout=timeout)
         output = checked.stdout + checked.stderr
         upstream.append({'command': cmd, 'exit_code': checked.returncode,
                          'diagnostics': output,

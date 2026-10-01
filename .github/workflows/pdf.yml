@@ -9,8 +9,10 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
+      - name: Configure build cache
+        run: printf 'BOOK_BUILD_CACHE=%s/bass-1973-cache\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
@@ -42,8 +44,77 @@ jobs:
               (target/name).chmod(0o755)
           with open(os.environ['GITHUB_PATH'], 'a') as stream:
               stream.write(str(target)+'\n')
+      - name: Select exact Rust toolchain
+        run: |
+          rustup toolchain install 1.97.0 --profile minimal
+          rust_toolchain="$(rustup run 1.97.0 rustc --print sysroot)"
+          printf '%s\n' "$rust_toolchain/bin" >> "$GITHUB_PATH"
+      - name: Identify pinned Tinymist cache
+        id: tinymist-cache
+        run: |
+          native_cache="$BOOK_BUILD_CACHE/tools/tinymist"
+          fingerprint="$(uv run --locked python scripts/bootstrap_tinymist.py fingerprint \
+            --config config/tinymist-build.json --cache "$native_cache")"
+          printf 'key=%s\npath=%s/%s\n' "$fingerprint" "$native_cache" "$fingerprint" >> "$GITHUB_OUTPUT"
+      - name: Restore pinned Tinymist
+        id: tinymist-restore
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          key: bass-1973-tinymist-${{ steps.tinymist-cache.outputs.key }}
+          path: ${{ steps.tinymist-cache.outputs.path }}
+      - name: Build and verify pinned Tinymist
+        run: uv run --locked python scripts/project.py tools
+      - name: Save verified Tinymist
+        if: steps.tinymist-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          key: bass-1973-tinymist-${{ steps.tinymist-cache.outputs.key }}
+          path: ${{ steps.tinymist-cache.outputs.path }}
+      - name: Reserve memory for complete book checks
+        run: |
+          findmnt -T "$RUNNER_TEMP"
+          df -h "$RUNNER_TEMP"
+          python3 -c 'import os, shutil; assert shutil.disk_usage(os.environ["RUNNER_TEMP"]).free >= 20 << 30, "Need 20 GiB free for swap and book outputs"'
+          book_swap="$RUNNER_TEMP/bass-1973.swap"
+          sudo install -m 600 /dev/null "$book_swap"
+          sudo dd if=/dev/zero of="$book_swap" bs=1M count=16384 status=progress conv=fsync
+          sudo mkswap "$book_swap"
+          sudo swapon "$book_swap"
+          swapon --show --bytes
+          free -m
       - name: Check and build
-        run: uv run --locked python scripts/project.py check
+        env:
+          PYTHONUNBUFFERED: '1'
+          RAYON_NUM_THREADS: '1'
+        run: |
+          (
+            while true; do
+              date -u +'%Y-%m-%dT%H:%M:%SZ'
+              free -m
+              ps -C tinymist -o pid,etimes,rss,vsz,nlwp,comm || true
+              for metric in memory.current memory.peak memory.events; do
+                if [[ -r "/sys/fs/cgroup/$metric" ]]; then
+                  printf '%s: ' "$metric"
+                  cat "/sys/fs/cgroup/$metric"
+                fi
+              done
+              sleep 15
+            done
+          ) &
+          resource_monitor=$!
+          trap 'kill "$resource_monitor" 2>/dev/null || true' EXIT
+          python3 .github/runner_zswap.py run --out "$RUNNER_TEMP/zswap-trial" -- \
+            /usr/bin/time -v uv run --locked python scripts/project.py check
+      - name: Save memory telemetry and native diagnostics
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: bass-1973-memory-telemetry
+          path: |
+            ${{ runner.temp }}/zswap-trial/
+            ${{ runner.temp }}/bass-1973-cache/typst-lint.json
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Checksums of the published PDFs
         working-directory: build
         run: |
