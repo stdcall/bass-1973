@@ -156,6 +156,9 @@ class Linux:
     def parameters(self):
         return {key: self.read(f"/sys/module/zswap/parameters/{key}") for key in PARAMS}
 
+    def zswap_counters(self):
+        return {x: integer(self.read(f"/sys/kernel/debug/zswap/{x}")) for x in COUNTERS}
+
     def cgroups(self, pid):
         rows = self.read(f"/proc/{pid}/cgroup").splitlines()
         unified = [x[3:] for x in rows if x.startswith("0::")]
@@ -217,9 +220,8 @@ class Linux:
             selected.update(added)
         return [records[p] for p in sorted(selected) if p in records]
 
-    def snapshot(self, anchor_pid, child_pid=None):
+    def snapshot(self, anchor_pid, child_pid=None, include_zswap=True):
         params = self.parameters()
-        counters = {x: integer(self.read(f"/sys/kernel/debug/zswap/{x}")) for x in COUNTERS}
         memory_text = self.read("/proc/meminfo")
         memory = key_values(memory_text, units=True)
         memory_units = {line.split()[0].rstrip(":"): "bytes" if len(line.split()) == 3 else "count"
@@ -233,7 +235,8 @@ class Linux:
         cg = self.cgroups(anchor_pid)
         process_cg = self.cgroups(child_pid) if child_pid and self.path(f"/proc/{child_pid}").exists() else None
         return dict(timestamp=time.time(), monotonic=time.monotonic(), parameters=params,
-                    zswap=counters, meminfo=memory, meminfo_units=memory_units, vmstat=vmstat,
+                    zswap=self.zswap_counters() if include_zswap else None,
+                    meminfo=memory, meminfo_units=memory_units, vmstat=vmstat,
                     pressure_memory=pressure(self.read("/proc/pressure/memory")),
                     swappiness=integer(self.read("/proc/sys/vm/swappiness")),
                     swaps=swaps(self.read("/proc/swaps")), cgroup=cg, child_cgroup=process_cg,
@@ -249,8 +252,8 @@ def kernel_messages():
     return [x for x in checked.stdout.splitlines() if KERNEL_FATAL.search(x)]
 
 
-def with_kernel(fs, anchor_pid, child_pid=None):
-    sample = fs.snapshot(anchor_pid, child_pid)
+def with_kernel(fs, anchor_pid, child_pid=None, include_zswap=True):
+    sample = fs.snapshot(anchor_pid, child_pid, include_zswap)
     sample["kernel_fatal_messages"] = kernel_messages()
     return sample
 
@@ -298,14 +301,31 @@ def ensure_debugfs(fs, evidence):
 
 
 def prepare(fs, anchor_pid, evidence):
-    evidence["original_parameters"] = fs.parameters()
-    ensure_debugfs(fs, evidence)
-    before = with_kernel(fs, anchor_pid)
-    evidence.update(original_parameters=before["parameters"], initial=before,
+    evidence.update(original_parameters=fs.parameters(), writes=[],
                     configuration=configuration(fs), kernel=platform.uname()._asdict(),
-                    cmdline=fs.read("/proc/cmdline"), writes=[])
-    if before["zswap"]["pool_total_size"] or before["zswap"]["stored_pages"]:
-        raise Unsafe("Initial compressed pool is not empty; no draining/reset permitted")
+                    cmdline=fs.read("/proc/cmdline"))
+    ensure_debugfs(fs, evidence)
+    # Capture physical memory and inherited controls even when lazy setup has
+    # not yet created the debugfs counter directory. Unavailable is not zero.
+    before = with_kernel(fs, anchor_pid, include_zswap=False)
+    evidence["initial"] = before
+    lazy = not fs.path("/sys/kernel/debug/zswap").exists()
+    if lazy:
+        before["zswap_telemetry"] = "unavailable_before_activation"
+        if enabled(before["parameters"]["enabled"]):
+            raise Unsafe("Enabled zswap has no counter directory")
+        if not re.match(r"^6\.17(?:\.|-|$)", evidence["kernel"]["release"]):
+            raise Unsafe("Missing counter directory on an unreviewed kernel lifecycle")
+        evidence["lazy_initialization"] = dict(
+            source="https://github.com/torvalds/linux/blob/v6.17/mm/zswap.c",
+            basis="Disabled zswap_init skips zswap_setup; runtime enabled setter calls setup, which creates debugfs counters.",
+            qualification="Missing directory permits this reviewed path but does not prove internal UNINIT; full post-enable telemetry remains mandatory.",
+            preactivation_counters=None)
+    else:
+        before["zswap"] = fs.zswap_counters()
+        before["zswap_telemetry"] = "available_before_activation"
+        if before["zswap"]["pool_total_size"] or before["zswap"]["stored_pages"]:
+            raise Unsafe("Initial compressed pool is not empty; no draining/reset permitted")
     if not before["parameters"]["compressor"] or not before["parameters"]["zpool"]:
         raise Unsafe("Cannot establish existing compressor/allocator")
     enabled(before["parameters"]["enabled"])
@@ -326,6 +346,10 @@ def prepare(fs, anchor_pid, evidence):
         if (key == "enabled" and not enabled(actual)) or (key != "enabled" and actual != value):
             raise Unsafe(f"Exact parameter readback failed: {key}")
     after = with_kernel(fs, anchor_pid)
+    evidence["postactivation"] = after
+    if lazy and (after["zswap"]["pool_total_size"] or after["zswap"]["stored_pages"]
+                 or after["zswap"]["decompress_fail"]):
+        raise Unsafe("First postactivation pool is not empty or has a decompression failure")
     for key in PARAMS:
         if key not in ("enabled", "max_pool_percent") and after["parameters"][key] != before["parameters"][key]:
             raise Unsafe(f"Unrequested parameter drift: {key}")
@@ -334,6 +358,10 @@ def prepare(fs, anchor_pid, evidence):
                     anchor_pid=anchor_pid)
     reference = dict(before)
     reference["parameters"] = after["parameters"]
+    if lazy:
+        # No fabricated preactivation counters: comparison starts from the
+        # first actually read complete, empty postactivation counter set.
+        reference["zswap"] = after["zswap"]
     failures = fatal_findings(dict(prepared=reference, budget=bound), after)
     if failures:
         raise Unsafe(f"Unsafe change during preparation: {failures}")
