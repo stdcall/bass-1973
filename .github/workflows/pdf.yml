@@ -45,7 +45,24 @@ jobs:
       - name: Check and build
         env:
           PYTHONUNBUFFERED: '1'
-        run: uv run --locked python scripts/project.py check
+        run: |
+          (
+            while true; do
+              date -u +'%Y-%m-%dT%H:%M:%SZ'
+              free -m
+              ps -C tinymist -o pid,etimes,rss,vsz,nlwp,comm || true
+              for metric in memory.current memory.peak memory.events; do
+                if [[ -r "/sys/fs/cgroup/$metric" ]]; then
+                  printf '%s: ' "$metric"
+                  cat "/sys/fs/cgroup/$metric"
+                fi
+              done
+              sleep 15
+            done
+          ) &
+          resource_monitor=$!
+          trap 'kill "$resource_monitor" 2>/dev/null || true' EXIT
+          /usr/bin/time -v uv run --locked python scripts/project.py check
       - name: Checksums of the published PDFs
         working-directory: build
         run: |
