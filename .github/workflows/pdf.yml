@@ -10,9 +10,9 @@ jobs:
   check:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
-    env:
-      BOOK_BUILD_CACHE: ${{ runner.temp }}/bass-1973-cache
     steps:
+      - name: Configure build cache
+        run: printf 'BOOK_BUILD_CACHE=%s/bass-1973-cache\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
