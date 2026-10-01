@@ -42,6 +42,18 @@ jobs:
               (target/name).chmod(0o755)
           with open(os.environ['GITHUB_PATH'], 'a') as stream:
               stream.write(str(target)+'\n')
+      - name: Reserve memory for complete book checks
+        run: |
+          findmnt -T "$RUNNER_TEMP"
+          df -h "$RUNNER_TEMP"
+          python3 -c 'import os, shutil; assert shutil.disk_usage(os.environ["RUNNER_TEMP"]).free >= 20 << 30, "Need 20 GiB free for swap and book outputs"'
+          book_swap="$RUNNER_TEMP/bass-1973.swap"
+          sudo install -m 600 /dev/null "$book_swap"
+          sudo dd if=/dev/zero of="$book_swap" bs=1M count=16384 status=progress conv=fsync
+          sudo mkswap "$book_swap"
+          sudo swapon "$book_swap"
+          swapon --show --bytes
+          free -m
       - name: Check and build
         env:
           PYTHONUNBUFFERED: '1'
