@@ -45,6 +45,9 @@ jobs:
       - name: Check and build
         env:
           PYTHONUNBUFFERED: '1'
+          RAYON_NUM_THREADS: '1'
+          MALLOC_ARENA_MAX: '2'
+          MALLOC_TRIM_THRESHOLD_: '65536'
         run: |
           (
             while true; do
