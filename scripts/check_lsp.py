@@ -23,6 +23,7 @@ import subprocess
 import sys
 import tempfile
 import threading
+import time
 from urllib.parse import unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -173,8 +174,16 @@ def check(root=ROOT):
             open_document(first)
             send('workspace/executeCommand', {
                 'command': 'tinymist.focusMain', 'arguments': [str(first)]})
+            deadline = time.monotonic() + 600
             while True:
-                event = events.pop(0) if events else inbox.get(timeout=90)
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise TimeoutError('Tinymist initial compilation exceeded 600 seconds')
+                try:
+                    event = events.pop(0) if events else inbox.get(timeout=remaining)
+                except queue.Empty as error:
+                    raise TimeoutError(
+                        'Tinymist initial compilation exceeded 600 seconds') from error
                 if event.get('method') == 'tinymist/compileStatus':
                     status = event['params']['status']
                     assert status != 'compileError', event
